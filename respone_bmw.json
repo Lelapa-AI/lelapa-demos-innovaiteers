@@ -1,0 +1,81 @@
+{
+  "detections": [
+    {
+      "angle": [],
+      "box": {
+        "br_x": 0.7349,
+        "br_y": 0.8652,
+        "tl_x": 0.1371,
+        "tl_y": 0.0759
+      },
+      "class": {
+        "name": "truck",
+        "probability": 0.9362
+      },
+      "color": [],
+      "mm": [],
+      "mmg": [
+        {
+          "generation_id": 11404,
+          "generation_name": "Other",
+          "make_id": 122,
+          "make_name": "Alpina",
+          "model_id": 7825,
+          "model_name": "Other",
+          "probability": 0.8452,
+          "years": "-"
+        },
+        {
+          "generation_id": 252,
+          "generation_name": "IV (G32)",
+          "make_id": 6,
+          "make_name": "BMW",
+          "model_id": 137,
+          "model_name": "6 Series",
+          "probability": 0.0996,
+          "years": "2017-2020"
+        },
+        {
+          "generation_id": 12397,
+          "generation_name": "Other",
+          "make_id": 6,
+          "make_name": "BMW",
+          "model_id": 7793,
+          "model_name": "Other",
+          "probability": 0.0425,
+          "years": "-"
+        }
+      ],
+      "status": {
+        "code": 0,
+        "message": "",
+        "selected": true
+      },
+      "subclass": [
+        {
+          "name": "vehicle",
+          "probability": 0.9986
+        }
+      ]
+    }
+  ],
+  "is_success": true,
+  "meta": {
+    "classifier": 2256,
+    "md5": "FB022D7388D8155DADFE04E5673D79D9",
+    "parameters": {
+      "box_max_ratio": 3.15,
+      "box_min_height": 180,
+      "box_min_ratio": 1,
+      "box_min_width": 180,
+      "box_select": "center",
+      "features": [
+        "mmg"
+      ],
+      "region": [
+        "DEF"
+      ]
+    },
+    "time": 0.109
+  }
+}
