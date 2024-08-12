@@ -1,6 +1,6 @@
 import os
 import requests
-from main import detect_car_details
+from car_detector import detect_car_details
 from translator import speech_text
 from requests.auth import HTTPBasicAuth
 
