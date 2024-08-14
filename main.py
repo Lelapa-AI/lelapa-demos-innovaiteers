@@ -46,12 +46,10 @@ def ai_prompt(prompt):
 def  chatgpt():
     # type : image/audio/text , message and user phone number 
     type, message, user_id = determine_media(request)
-    if type != "car":    
+ 
     # convert the message to english so ai can understand
-        ai_response = ai_prompt(translator(message,data['language'],"english"))
-    else:
-        # fixed response for images
-        ai_response ="" 
+    ai_response = ai_prompt(translator(message,data['language'],"english"))
+
     # convert the message to preferred language so user can understand
     response = translator(ai_response,"english",data['language'])
     # sends message back to user

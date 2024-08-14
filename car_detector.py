@@ -24,11 +24,7 @@ def detect_car_details(image_byte):
         "Content-Type": "application/octet-stream",
     }
 
-    # Read the image file in binary mode
-    # with open(image_path, 'rb') as img_file:
-    #     img_data = img_file.read()
 
-    # Send the POST request
     response = requests.post(url, params=params, headers=headers, data=image_byte)
 
     # Check if the request was successful
@@ -51,7 +47,3 @@ def refine_raw_data(response):
 
 
 # Extract the mmg information
-
-# image_path = 'images/20240629_115344.jpg'  # Replace with the path to your image
-# car_details = detect_car_details(image_path)
-# print(car_details)

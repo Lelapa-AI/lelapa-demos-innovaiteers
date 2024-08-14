@@ -1,10 +1,10 @@
 import os
 import requests
-from main import detect_car_details
 from translator import speech_text
 from requests.auth import HTTPBasicAuth
 from dotenv import load_dotenv
 load_dotenv()
+import car_detector
 
 
 
@@ -55,11 +55,11 @@ def determine_media(request):
     if num_media > 0:
         media_type = request.values.get('MediaContentType0', '')
         media_url = request.values.get('MediaUrl0', '')
-        response = requests.get(media_url, auth=HTTPBasicAuth(os.getenv("TWILLIO_SID"), 'TWILLIO_TOKEN'))
+        response = requests.get(media_url, auth=HTTPBasicAuth(os.getenv("TWILLIO_SID"), os.getenv('TWILLIO_TOKEN')))
 
         if 'image' in media_type:
 
-            response = detect_car_details(response)
+            response = car_detector.detect_car_details(response.content)
             car_data = format_response(response)
             return "car", car_data, request.values.get("WaId","")
 
