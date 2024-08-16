@@ -1,12 +1,11 @@
 import google.generativeai as genai
 from flask import Flask, request
 from handle_media import determine_media
-import openai
-from twilio.twiml.messaging_response import MessagingResponse
-import os
 from google.api_core.exceptions import ResourceExhausted
 from vuvusetup import translator,object_recognise,LANGUAGES
 from translator import data,get_data
+from message_handler import send_message
+
 
 
 
@@ -45,34 +44,16 @@ def ai_prompt(prompt):
 
 @app.route('/chatbot', methods=['POST'])
 def  chatgpt():
-    incoming_que = determine_media(request)
-    print(incoming_que)
+    # type : image/audio/text , message and user phone number 
+    type, message, user_id = determine_media(request)
+ 
+    # convert the message to english so ai can understand
+    ai_response = ai_prompt(translator(message,data['language'],"english"))
 
-    for word in incoming_que.split(" "):
-       for key in LANGUAGES.keys():
-          if key in word.lower():
-             global data
-             data["language"] = key
-    get_data(incoming_que)
-    print("Question: ", incoming_que)
-
-    if incoming_que == "said 1":
-       incoming_que = "2020"
-    
-    answer = ai_prompt(incoming_que)
-    
-    print("BOT Answer: ", answer)
-    bot_resp = MessagingResponse()
-    msg = bot_resp.message()
-    if incoming_que == "car not found":
-       msg.body("Oops I dont recognise vehicle maybe I can detail the car for me and I'll try figure the car out for you?")
-    else:
-      if data['language'] == "english":
-        msg.body(answer)
-      else:
-        msg.body(translator(answer,"english",data['language']))
-    
-    return str(bot_resp)
+    # convert the message to preferred language so user can understand
+    response = translator(ai_response,"english",data['language'])
+    # sends message back to user
+    return send_message(response,user_id)
 
 # Run the Flask app
 if __name__ == '__main__':
