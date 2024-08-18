@@ -1,5 +1,7 @@
 flask
+dotenv
 openai
 twilio
 pyngrok
+google-cloud
 google.generativeai
