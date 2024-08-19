@@ -93,9 +93,6 @@ def speech_to_text(content,file_size):
         "file_size": file_size,
     }
 
-    headers={
-        "X-CLIENT-TOKEN": VULAVULA_TOKEN,
-    }
 
     resp = post(
         "https://vulavula-services.lelapa.ai/api/v1/transport/file-upload",
@@ -105,9 +102,7 @@ def speech_to_text(content,file_size):
 
     upload_id = resp.json()["upload_id"]
 
-    headers={
-        "X-CLIENT-TOKEN": VULAVULA_TOKEN,
-    }
+
 
     process = post(
         f"https://vulavula-services.lelapa.ai/api/v1/transcribe/process/{upload_id}",
@@ -126,4 +121,7 @@ def speech_to_text(content,file_size):
         
     print(process.json())
     return resp.json()
+
+
+
 
