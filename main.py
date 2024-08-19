@@ -58,12 +58,12 @@ def  chatgpt():
               session['history'] = []
 
       # Add user input to the session
-      
-      message_lang = message.lower().split(' ')
+      message_lang = message.lower().split()
       for i in message_lang:
-        if i in LANGUAGES:
+        if i in LANGUAGES.keys():
           global data
           data['language'] = i
+          print(data)
           break
           
          
@@ -78,7 +78,7 @@ def  chatgpt():
               
       # convert the message to preferred language so user can understand
       else:
-        
+        print(data)
         response = translator(ai_response,"english",data['language'])
         # sends message back to user
         return send_message(response)
@@ -89,4 +89,4 @@ def  chatgpt():
 
 # Run the Flask app
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', debug=True, port=5000)
+    app.run(host='0.0.0.0', debug=False, port=5000)

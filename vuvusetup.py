@@ -7,7 +7,7 @@ load_dotenv()
 
 
 
-VULAVULA_TOKEN = getenv('VULAVULA_KEY')
+VULAVULA_TOKEN = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImZmYjk4MzIwNDE3ZTRhODBhMDQ2YmExZDNlZmJhNTM4IiwiY2xpZW50X2lkIjoxNSwicmVxdWVzdHNfcGVyX21pbnV0ZSI6MCwibGFzdF9yZXF1ZXN0X3RpbWUiOm51bGx9.QMnha4-WdPPV0kqclkCgjg7Q5iRMiiFyUqhMBDDwJ7o"
 VULAVULA_BASE_URL = 'https://vulavula-services.lelapa.ai/api/v1/'
 LANGUAGES = {
         "sotho": "nso_Latn",
@@ -49,6 +49,7 @@ def translator(sentence,lang,target):
     }
     # Sending POST request
     response =  post(TRANSLATE_URL, headers=headers, json=data)
+    print(response.json())
     # return sentence if failed to translate
     if response.status_code != 200:
         return sentence
