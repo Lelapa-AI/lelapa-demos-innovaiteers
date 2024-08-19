@@ -221,8 +221,8 @@ def list_files_uploaded():
 
 
 
-list_files_uploaded()
-process_audio_file("/workspaces/lelapa-demos-innovaiteers/audios.wav")
-# process_images("/workspaces/lelapa-demos-innovaiteers/carTest.jpg")
-# delete_file("Sample audio 1")
-list_files_uploaded()
+# list_files_uploaded()
+# process_audio_file("/workspaces/lelapa-demos-innovaiteers/audios.wav")
+# # process_images("/workspaces/lelapa-demos-innovaiteers/carTest.jpg")
+# # delete_file("Sample audio 1")
+# list_files_uploaded()

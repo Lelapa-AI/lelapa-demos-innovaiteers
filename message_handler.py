@@ -1,4 +1,5 @@
 from twilio.rest import Client
+from twilio.twiml.messaging_response import MessagingResponse
 from os import getenv
 from dotenv import load_dotenv
 load_dotenv()
@@ -9,16 +10,10 @@ load_dotenv()
 """
 takes 2 parameters the message to send and user number contry code inclueded.
 """
-def send_message(message,contact_number):
-    account_sid = getenv("TWILLIO_SID")
-    auth_token = getenv('TWILLIO_TOKEN')
-    client = Client(account_sid, auth_token)
-
-    message = client.messages.create(
-    from_='whatsapp:+14155238886',
-    body=message,
-    to=f'whatsapp:{contact_number}'
-    )
+def send_message(message):
+    res = MessagingResponse()
+    msg = res.message()
+    msg.body(message)
     # return message error status for error handling
-    return str(message)
+    return str(res)
 
