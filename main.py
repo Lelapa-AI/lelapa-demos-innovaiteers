@@ -1,10 +1,11 @@
 import google.generativeai as genai
-from flask import Flask, request
+from flask import Flask, request, session
 from handle_media import determine_media
 from google.api_core.exceptions import ResourceExhausted
 from vuvusetup import translator,object_recognise,LANGUAGES
 from translator import data,get_data
 from message_handler import send_message
+import os
 
 
 
@@ -13,6 +14,8 @@ from message_handler import send_message
 # Init the Flask App
 app = Flask(__name__)
 language = ""
+app.secret_key = os.getenv('FLASK_SECRET_KEY') 
+
 
 genai.configure(api_key='AIzaSyBG3Jc-pGQxTISOFWwZiEgPhbQoAPEEe7Q')
 
@@ -44,16 +47,28 @@ def ai_prompt(prompt):
 
 @app.route('/chatbot', methods=['POST'])
 def  chatgpt():
-    # type : image/audio/text , message and user phone number 
-    type, message, user_id = determine_media(request)
- 
-    # convert the message to english so ai can understand
-    ai_response = ai_prompt(translator(message,data['language'],"english"))
+    try:
+      # type : image/audio/text , message and user phone number 
+      type, message, user_id = determine_media(request)
 
-    # convert the message to preferred language so user can understand
-    response = translator(ai_response,"english",data['language'])
-    # sends message back to user
-    return send_message(response,user_id)
+      if 'conversation' not in session: #session coming from Flask
+              session['conversation'] = []
+
+      # Add user input to the session
+      session['conversation'].append(message)
+    
+      # convert the message to english so ai can understand
+      ai_response = ai_prompt(translator(message,data['language'],"english"))
+
+      session['conversation'].append(message)
+
+      # convert the message to preferred language so user can understand
+      response = translator(ai_response,"english",data['language'])
+      # sends message back to user
+      return send_message(response,user_id)
+    except Exception as e:
+      print(f"An exception occured in main.py {e}")
+      return "An error occured", 500
 
 # Run the Flask app
 if __name__ == '__main__':
