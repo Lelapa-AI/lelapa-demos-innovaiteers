@@ -127,5 +127,3 @@ def speech_to_text(content,file_size):
     print(process.json())
     return resp.json()
 
-
- 

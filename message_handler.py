@@ -1,4 +1,3 @@
-from twilio.rest import Client
 from twilio.twiml.messaging_response import MessagingResponse
 from os import getenv
 from dotenv import load_dotenv
