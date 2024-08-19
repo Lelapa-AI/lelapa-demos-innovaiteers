@@ -73,15 +73,9 @@ def  chatgpt():
       session['history'].append({"role": "user", "parts": [message]})
       session['history'].append({"role": "model", "parts": [ai_response]})
 
-      if data['language'] == "english":
-        return send_message(ai_response)
-              
-      # convert the message to preferred language so user can understand
-      else:
-        print(data)
-        response = translator(ai_response,"english",data['language'])
-        # sends message back to user
-        return send_message(response)
+      if data['language'] != "english":
+        ai_response = translator(ai_response,"english",data['language'])
+      return send_message(ai_response)
     
     except Exception as e:
       print(f"An exception occured in main.py {e}")
