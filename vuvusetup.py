@@ -22,7 +22,7 @@ LANGUAGES = {
         "swahili": "swh_Latn"
     }
 
-headers={"X-CLIENT-TOKEN": VULAVULA_TOKEN,}
+headers={"X-CLIENT-TOKEN": getenv("VULAVULA_KEY")}
 # The transport API to upload your file
 TRANSPORT_URL = VULAVULA_BASE_URL+"transport/file-upload"
  
@@ -49,11 +49,10 @@ def translator(sentence,lang,target):
     }
     # Sending POST request
     response =  post(TRANSLATE_URL, headers=headers, json=data)
-    print(response.json())
     # return sentence if failed to translate
     if response.status_code != 200:
         return sentence
-    return response.json()["translation"][0]["translation_text"]
+    return response.json()["translation"][0]["translated_text"]
 
 
 
@@ -128,3 +127,5 @@ def speech_to_text(content,file_size):
     print(process.json())
     return resp.json()
 
+
+ 
