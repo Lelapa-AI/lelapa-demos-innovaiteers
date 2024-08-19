@@ -22,7 +22,7 @@ LANGUAGES = {
         "swahili": "swh_Latn"
     }
 
-headers={"X-CLIENT-TOKEN": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijk3Mzk5YmEwMDJmZTRiMzA5NDc0Yzk3ZDgzZTM1OTFhIiwiY2xpZW50X2lkIjoxNSwicmVxdWVzdHNfcGVyX21pbnV0ZSI6MCwibGFzdF9yZXF1ZXN0X3RpbWUiOm51bGx9.fsGokd86Zi4r2kWL_0de7Um9ovMoCZWssBJUUS5q5tY"}
+headers={"X-CLIENT-TOKEN": getenv("VULAVULA_KEY")}
 # The transport API to upload your file
 TRANSPORT_URL = VULAVULA_BASE_URL+"transport/file-upload"
  
@@ -128,4 +128,4 @@ def speech_to_text(content,file_size):
     return resp.json()
 
 
-
+ 
