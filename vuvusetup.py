@@ -3,6 +3,7 @@ from requests import Session,post
 import base64
 from os import getenv
 from dotenv import load_dotenv
+from time import sleep
 load_dotenv()
 
 
@@ -107,14 +108,22 @@ def speech_to_text(content,file_size):
     process = post(
         f"https://vulavula-services.lelapa.ai/api/v1/transcribe/process/{upload_id}",
         json={
-            # "webhook": <INSERT_URL>,
-            "language_code":"zul"
+            "webhook": "https://tolerant-terribly-flea.ngrok-free.app/chatbot",
+            "language_code":"eng"
         },
         headers=headers,
     )
     x = 0
     while process.json()["status"] == 'Message sent to process queue.':
-        x += 1 
+        process = post(
+        f"https://vulavula-services.lelapa.ai/api/v1/transcribe/process/{upload_id}",
+        json={
+            "webhook": "https://tolerant-terribly-flea.ngrok-free.app/chatbot",
+            "language_code":"zul"
+        },
+        headers=headers,
+    )   
+        sleep(3)
         print(x)
         if x == 100:
             return "failed"

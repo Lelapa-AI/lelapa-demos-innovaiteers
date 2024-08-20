@@ -50,8 +50,10 @@ def ai_prompt(prompt,his):
 @app.route('/chatbot', methods=['POST'])
 def  chatgpt():
     try:
-      # type : image/audio/text , message and user phone number 
       type, message, user_id = determine_media(request)
+
+      if type == "audio":
+         return send_message("Let me quickly listen..")
 
       if user_id not in session: #session coming from Flask
               session['user_id'] = user_id
@@ -63,7 +65,7 @@ def  chatgpt():
         if i in LANGUAGES.keys():
           global data
           data['language'] = i
-          print(data)
+          # print(data)
           break
           
          
@@ -77,6 +79,7 @@ def  chatgpt():
         ai_response = translator(ai_response,"english",data['language'])
       return send_message(ai_response)
     
+
     except Exception as e:
       print(f"An exception occured in main.py {e}")
       return "An error occured", 500

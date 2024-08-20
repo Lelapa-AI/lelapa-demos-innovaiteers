@@ -58,5 +58,3 @@ def get_data(sentence,prod=False):
         return "year"
     return
 
-
-speech_text()
