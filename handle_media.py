@@ -84,10 +84,6 @@ def determine_media(request):
                 message = message[0]["text"]
             return "text",message, request.values.get("WaId","")
         
-        # try:
-        #     message = request.json["postprocessed_text"][0]["text"]
-        # except KeyError:
-        #     return "text", , request.values.get("WaId","")
 
 
 

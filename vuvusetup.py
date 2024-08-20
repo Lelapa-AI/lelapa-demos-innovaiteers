@@ -127,8 +127,7 @@ def speech_to_text(content,file_size):
         print(x)
         if x == 100:
             return "failed"
-        
-    print(process.json())
+    
     return resp.json()
 
 

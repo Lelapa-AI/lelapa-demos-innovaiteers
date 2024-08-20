@@ -53,7 +53,9 @@ def  chatgpt():
       type, message, user_id = determine_media(request)
 
       if type == "audio":
-         return send_message("Let me quickly listen..")
+         return send_message("feature in progress.")
+
+
 
       if user_id not in session: #session coming from Flask
               session['user_id'] = user_id
