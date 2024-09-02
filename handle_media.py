@@ -67,12 +67,9 @@ def determine_media(request):
         response = requests.get(media_url, auth=HTTPBasicAuth(os.getenv("TWILLIO_SID"), os.getenv('TWILLIO_TOKEN')))
 
         if 'image' in media_type:
-            encoded_bytes = base64.b64encode(response.content)
-            hex_string = binascii.hexlify(response.content).decode('ascii')
-            print(hex_string)
-            response = car_detector.detect_car_details(hex_string)
-            car_data = format_response(response)
-            return "car", car_data, request.values.get("WaId","")
+  
+            response = car_detector.detection_model(response.content)
+            return "car", response, request.values.get("WaId","")
 
         elif 'audio' in media_type:
             # Issue with handling audio
