@@ -2,8 +2,6 @@ import os
 import requests
 from translator import speech_text
 from requests.auth import HTTPBasicAuth
-import binascii
-import base64
 
 
 import car_detector
@@ -67,9 +65,9 @@ def determine_media(request):
         response = requests.get(media_url, auth=HTTPBasicAuth(os.getenv("TWILLIO_SID"), os.getenv('TWILLIO_TOKEN')))
 
         if 'image' in media_type:
-  
-            response = car_detector.detection_model(response.content)
-            return "car", response, request.values.get("WaId","")
+
+            response = car_detector.detect_car_details(response.content)
+            return "text", response, request.values.get("WaId","")
 
         elif 'audio' in media_type:
             # Issue with handling audio
