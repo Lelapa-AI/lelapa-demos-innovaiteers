@@ -10,4 +10,4 @@ def detect_car_details(image_byte):
         my_json = literal_eval(response.content.decode('utf8').replace("'", '"'))
         return my_json["description"]
     else:
-        return {}
+        return "theres nothing in this image"

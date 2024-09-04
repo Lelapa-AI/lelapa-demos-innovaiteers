@@ -1,4 +1,4 @@
-PORT=5000
+PORT=7000
 
 PID=$(sudo lsof -t -i :$PORT)
 if [ -z "$PID" ]; then
