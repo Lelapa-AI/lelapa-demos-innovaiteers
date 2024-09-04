@@ -67,8 +67,7 @@ def determine_media(request):
         if 'image' in media_type:
 
             response = car_detector.detect_car_details(response.content)
-            car_data = format_response(response)
-            return "car", car_data, request.values.get("WaId","")
+            return "text", response, request.values.get("WaId","")
 
         elif 'audio' in media_type:
             # Issue with handling audio

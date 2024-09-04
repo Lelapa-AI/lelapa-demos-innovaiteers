@@ -101,6 +101,7 @@ def speech_to_text(content,file_size):
         headers=headers,
     )
 
+    print(resp.json())
     upload_id = resp.json()["upload_id"]
 
 
@@ -108,25 +109,28 @@ def speech_to_text(content,file_size):
     process = post(
         f"https://vulavula-services.lelapa.ai/api/v1/transcribe/process/{upload_id}",
         json={
-            "webhook": "https://tolerant-terribly-flea.ngrok-free.app/chatbot",
+            "webhook": "https://tolerant-terribly-flea.ngrok-free.app/audio",
             "language_code":"eng"
         },
         headers=headers,
     )
     x = 0
     while process.json()["status"] == 'Message sent to process queue.':
+        print(process.json()["status"])
+
         process = post(
         f"https://vulavula-services.lelapa.ai/api/v1/transcribe/process/{upload_id}",
         json={
-            "webhook": "https://tolerant-terribly-flea.ngrok-free.app/chatbot",
-            "language_code":"zul"
+            "webhook": "https://tolerant-terribly-flea.ngrok-free.app/audio",
+            "language_code":"eng"
         },
         headers=headers,
     )   
         sleep(3)
-        print(x)
         if x == 100:
             return "failed"
+        
+    print(resp.json())
     
     return resp.json()
 

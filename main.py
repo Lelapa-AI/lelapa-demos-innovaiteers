@@ -45,15 +45,22 @@ def ai_prompt(prompt,his):
     return response.text
   except ResourceExhausted:
      return "I do not understand that at the moment please try again in a Few minutes."
+  
+
+@app.route('/audio', methods=['POST','GET'])
+def audio_handler():
+   print("I've received some audio")
+   
 
 
 @app.route('/chatbot', methods=['POST'])
 def  chatgpt():
+  
     try:
       type, message, user_id = determine_media(request)
-
+      print(message)  
       if type == "audio":
-         return send_message("feature in progress.")
+         return send_message("")
 
 
 
