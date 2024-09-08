@@ -72,6 +72,10 @@ def find_chat(user_id):
 def chatgpt():
     try:
         type, message, user_id = determine_media(request)
+        
+        if message == "complete":
+            profiling_handler.write_file_to_pdf(user_id)
+
         # print(message)
         if type == "audio":
             return send_message("")
