@@ -29,5 +29,3 @@ def write_to_text(user,message,filename):
         f.write(f"{user}: {message}")
         f.close()
 
-
-write_to_text("user","hello","retro.txt")

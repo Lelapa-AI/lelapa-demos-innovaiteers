@@ -6,6 +6,7 @@ from translator import data
 from handle_media import determine_media
 from message_handler import send_message
 from vuvusetup import translator, LANGUAGES
+import profiling_handler
 
 # Init the Flask App
 app = Flask(__name__)
@@ -91,11 +92,16 @@ def chatgpt():
         # session['history'].append({"role": "user", "parts": [message]})
         user_history = find_chat(user_id)
         user_history.append({"role": "user", "parts": [message]})
+        profiling_handler.write_to_text("user",message,user_id)
+
         # convert the message to english so ai can understand
         ai_response = ai_prompt(translator(message, data['language'], "english"),user_history)
 
         # session['history'].append({"role": "model", "parts": [ai_response]})
         user_history.append({"role": "model", "parts": [ai_response]})
+        profiling_handler.write_to_text("model",ai_response,"AI Bot")
+
+
 
         if data['language'] != "english":
             ai_response = translator(ai_response, "english", data['language'])
