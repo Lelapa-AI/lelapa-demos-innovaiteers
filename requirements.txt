@@ -3,6 +3,8 @@ python-dotenv
 openai
 twilio
 pyngrok
+fpdf
+retry
 google-cloud
 google.generativeai
 Flask-Session
