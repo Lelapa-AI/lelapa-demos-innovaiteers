@@ -24,4 +24,10 @@ def write_file_to_pdf(filename):
     pdf.output(f"{filename}_history.pdf")   
 
 
-write_file_to_pdf("w.txt")
+def write_to_text(user,message,filename):
+    with open(filename,"+a") as f:
+        f.write(f"{user}: {message}")
+        f.close()
+
+
+write_to_text("user","hello","retro.txt")
