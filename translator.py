@@ -1,4 +1,4 @@
-from vuvusetup import object_recognise,translator,LANGUAGES,speech_to_text
+from vuvusetup import object_recognise,translator,LANGUAGES,speech_to_text_AI
 
 import os
 
@@ -33,7 +33,7 @@ def speech_text(content="audios.wav"):
     if content != "audios.wav":
         return
     FILE_SIZE = os.path.getsize(content)
-    speech_to_text(content,FILE_SIZE)
+    return speech_to_text_AI(content)
 
     
 
