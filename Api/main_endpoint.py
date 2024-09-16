@@ -10,8 +10,8 @@ import os
 
 app = Flask(__name__)
 
-os.environ['TWILIO_SID'] = 'ACa0eee678c34990d54dabeddd258ceb45'
-os.environ['TWILIO_TOKEN'] = '8e145c3cd5ea63257bd270014894ee26'
+os.environ['TWILIO_SID'] = ''
+os.environ['TWILIO_TOKEN'] = ''
 
 # Load the system instructions from a file
 def get_system_string():
@@ -19,7 +19,7 @@ def get_system_string():
         return file.read()
     
 # Set up the API key
-genai.configure(api_key='AIzaSyBkdArp82sMBHFbVfZTGaqgglUytEbhBGA')
+genai.configure(api_key='')
 
 # Create the model
 generation_config = {

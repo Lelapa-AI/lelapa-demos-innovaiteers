@@ -16,8 +16,8 @@ load_dotenv()
 
 
 
-os.environ['TWILIO_SID'] = 'ACa0eee678c34990d54dabeddd258ceb45'
-os.environ['TWILIO_TOKEN'] = '8e145c3cd5ea63257bd270014894ee26'
+os.environ['TWILIO_SID'] = ''
+os.environ['TWILIO_TOKEN'] = ''
 
 translator = Translator()
 
@@ -56,7 +56,7 @@ def determine_media(request):
     if num_media > 0:
         media_type = request.values.get('MediaContentType0', '')
         media_url = request.values.get('MediaUrl0', '')
-        response = requests.get(media_url, auth=HTTPBasicAuth('ACa0eee678c34990d54dabeddd258ceb45', '8e145c3cd5ea63257bd270014894ee26'))
+        response = requests.get(media_url, auth=HTTPBasicAuth('', ''))
         print(response.content)
     
 
@@ -103,7 +103,7 @@ def determine_media(request):
 
     
 def get_item_from_image(image_file):
-    genai.configure(api_key='AIzaSyBkdArp82sMBHFbVfZTGaqgglUytEbhBGA')
+    genai.configure(api_key='')
 
     def upload_to_gemini(path):
         file = genai.upload_file(path)

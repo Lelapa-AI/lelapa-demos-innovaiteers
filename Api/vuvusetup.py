@@ -8,7 +8,7 @@ load_dotenv()
 
 
 
-VULAVULA_TOKEN = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjdlN2E5YzE0M2Q1MzQ0ODM5NDE0NTMwNDgxODc2N2RiIiwiY2xpZW50X2lkIjo0NiwicmVxdWVzdHNfcGVyX21pbnV0ZSI6MCwibGFzdF9yZXF1ZXN0X3RpbWUiOm51bGx9.zwV-1vFG8arRMOTnTSdPgl9sbY1ip0EaARk3NIKz0OQ"
+VULAVULA_TOKEN = ""
 VULAVULA_BASE_URL = 'https://vulavula-services.lelapa.ai/api/v1/'
 LANGUAGES = {
         "sotho": "nso_Latn",
