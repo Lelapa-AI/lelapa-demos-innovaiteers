@@ -3,11 +3,12 @@ from requests import Session,post
 import base64
 from os import getenv
 from dotenv import load_dotenv
+from time import sleep
 load_dotenv()
 
 
 
-VULAVULA_TOKEN = getenv('VULAVULA_KEY')
+VULAVULA_TOKEN = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjdlN2E5YzE0M2Q1MzQ0ODM5NDE0NTMwNDgxODc2N2RiIiwiY2xpZW50X2lkIjo0NiwicmVxdWVzdHNfcGVyX21pbnV0ZSI6MCwibGFzdF9yZXF1ZXN0X3RpbWUiOm51bGx9.zwV-1vFG8arRMOTnTSdPgl9sbY1ip0EaARk3NIKz0OQ"
 VULAVULA_BASE_URL = 'https://vulavula-services.lelapa.ai/api/v1/'
 LANGUAGES = {
         "sotho": "nso_Latn",
@@ -22,7 +23,7 @@ LANGUAGES = {
         "swahili": "swh_Latn"
     }
 
-headers={"X-CLIENT-TOKEN": VULAVULA_TOKEN,}
+headers={"X-CLIENT-TOKEN": VULAVULA_TOKEN}
 # The transport API to upload your file
 TRANSPORT_URL = VULAVULA_BASE_URL+"transport/file-upload"
  
@@ -45,14 +46,17 @@ def translator(sentence,lang,target):
     data = {
             "input_text": sentence,
             "source_lang": LANGUAGES.get(lang),
-            "target_lang": LANGUAGES.get(target)
+            "target_lang": target
     }
     # Sending POST request
+    print(data)
     response =  post(TRANSLATE_URL, headers=headers, json=data)
+    print(response.text)
+    print(response.json())
     # return sentence if failed to translate
     if response.status_code != 200:
         return sentence
-    return response.json()["translation"][0]["translation_text"]
+    return response.json()["translation"][0]["translated_text"]
 
 
 
@@ -93,9 +97,6 @@ def speech_to_text(content,file_size):
         "file_size": file_size,
     }
 
-    headers={
-        "X-CLIENT-TOKEN": VULAVULA_TOKEN,
-    }
 
     resp = post(
         "https://vulavula-services.lelapa.ai/api/v1/transport/file-upload",
@@ -105,25 +106,35 @@ def speech_to_text(content,file_size):
 
     upload_id = resp.json()["upload_id"]
 
-    headers={
-        "X-CLIENT-TOKEN": VULAVULA_TOKEN,
-    }
+
 
     process = post(
         f"https://vulavula-services.lelapa.ai/api/v1/transcribe/process/{upload_id}",
         json={
-            # "webhook": <INSERT_URL>,
-            "language_code":"zul"
+            "webhook": "https://tolerant-terribly-flea.ngrok-free.app/chatbot",
+            "language_code":"eng"
         },
         headers=headers,
     )
     x = 0
     while process.json()["status"] == 'Message sent to process queue.':
-        x += 1 
+        process = post(
+        f"https://vulavula-services.lelapa.ai/api/v1/transcribe/process/{upload_id}",
+        json={
+            "webhook": "https://tolerant-terribly-flea.ngrok-free.app/chatbot",
+            "language_code":"zul"
+        },
+        headers=headers,
+    )   
+        sleep(3)
         print(x)
         if x == 100:
             return "failed"
-        
-    print(process.json())
+    
     return resp.json()
+
+
+
+
+
 
