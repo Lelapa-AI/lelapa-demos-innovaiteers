@@ -1,4 +1,4 @@
-# WhatsApp Chatbot for Insurance Quotes
+# WhatsApp Chatbot for Insurance Quotes (Qoutelynx)
 
 This is a Python-based WhatsApp chatbot that uses Twilio for endpoint configuration. The chatbot performs image recognition and generates an insurance quote based on the recognized image.
 
