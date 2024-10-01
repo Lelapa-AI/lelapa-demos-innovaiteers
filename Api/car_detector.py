@@ -45,5 +45,3 @@ def refine_raw_data(response):
                     return mmg
     return {"Car": "Unrecognizable"}  # Return None if no matching mmg found
 
-
-# Extract the mmg information

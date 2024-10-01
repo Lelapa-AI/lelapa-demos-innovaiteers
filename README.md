@@ -1,4 +1,4 @@
-# WhatsApp Chatbot for Insurance Quotes
+# WhatsApp Chatbot for Insurance Quotes (Qoutelynx)
 
 This is a Python-based WhatsApp chatbot that uses Twilio for endpoint configuration. The chatbot performs image recognition and generates an insurance quote based on the recognized image.
 
@@ -20,8 +20,9 @@ This is a Python-based WhatsApp chatbot that uses Twilio for endpoint configurat
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/your-username/whatsapp-insurance-chatbot.git
-   cd whatsapp-insurance-chatbot
+   git clone https://github.com/your-username/lelapa-demos-innovaiteers.git
+   cd lelapa-demos-innovaiteers/Api
+   python3 main_endpoint.py
 
 
 ## Vulavula Api 
@@ -29,6 +30,3 @@ This is a Python-based WhatsApp chatbot that uses Twilio for endpoint configurat
 - https://beta-vulavula-services.lelapa.ai/#/
 - https://colab.research.google.com/drive/1EGCWe-_8cnxyTo345wwbVVaHd_Crc_dI#scrollTo=H7kTCNDa6SP-
 - https://docs.lelapa.ai/getting-started/quickstart-tutorials
-
-## Acc logs
- - 'AC38ac74d05b32396fae97f3bd05cc3213', '287e77d92e74784ebf8f1ceb6d7fc9c0'
