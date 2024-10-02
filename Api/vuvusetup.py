@@ -10,7 +10,6 @@ load_dotenv()
 
 
 VULAVULA_TRANSCRIBE_URL = "https://vulavula-services.lelapa.ai//api/v1/transcribe/sync"
-VULAVULA_TOKEN = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImZmYjk4MzIwNDE3ZTRhODBhMDQ2YmExZDNlZmJhNTM4IiwiY2xpZW50X2lkIjoxNSwicmVxdWVzdHNfcGVyX21pbnV0ZSI6MCwibGFzdF9yZXF1ZXN0X3RpbWUiOm51bGx9.QMnha4-WdPPV0kqclkCgjg7Q5iRMiiFyUqhMBDDwJ7o"
 VULAVULA_BASE_URL = 'https://vulavula-services.lelapa.ai/api/v1/'
 LANGUAGES = {
         "sotho": "nso_Latn",
@@ -144,25 +143,6 @@ def speech_to_text(content,file_size):
     except:
         return {'Lelapi':"offline"}
 
-    
-    
 
-def speech_text(content="audios.wav"):
-    """Transcribes audio using Lelapi first if fails uses ai
-
-    Args:
-        content (str, optional): _description_. Defaults to "audios.wav".
-
-    Returns:
-        String: Returns transcribed audio either from lepai or ai
-    """
-    if content != "audios.wav":
-        return
-    FILE_SIZE = os.path.getsize(content)
-    possible_trascption = speech_to_text(content,FILE_SIZE)
-    if possible_trascption == {'Lelapi':"offline"}: 
-        return speech_to_text_AI(content)
-    else:
-        return possible_trascption
         
 # print(speech_text("audios.wav")) Test
