@@ -9,7 +9,7 @@ from time import sleep
 load_dotenv()
 
 
-
+VULAVULA_TRANSCRIBE_URL = "https://vulavula-services.lelapa.ai//api/v1/transcribe/sync"
 VULAVULA_TOKEN = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImZmYjk4MzIwNDE3ZTRhODBhMDQ2YmExZDNlZmJhNTM4IiwiY2xpZW50X2lkIjoxNSwicmVxdWVzdHNfcGVyX21pbnV0ZSI6MCwibGFzdF9yZXF1ZXN0X3RpbWUiOm51bGx9.QMnha4-WdPPV0kqclkCgjg7Q5iRMiiFyUqhMBDDwJ7o"
 VULAVULA_BASE_URL = 'https://vulavula-services.lelapa.ai/api/v1/'
 LANGUAGES = {
@@ -100,8 +100,13 @@ def speech_to_text_AI(audiopath):
         return None  # Return None as the process is not complete
 
 
-"""InActive due to Lelapi"""
 def speech_to_text(content,file_size):
+    """Lelapi_transcrption
+
+    Args:
+        content (_type_): _description_
+        file_size (_type_): _description_
+    """
 
     # Open file in binary mode
     with open(content, 'rb') as file:
@@ -113,57 +118,51 @@ def speech_to_text(content,file_size):
 
     # Decode bytes to string
     encoded_string = encoded_content.decode()
-
+    
+    # The req can also take the preffered language
     transport_request_body = {
         "file_name": content,
         "audio_blob": encoded_string,
-        "file_size": file_size,
+        # 'language_code': 'eng',
+        "file_size": 0,
+    }
+
+    headers1 = {
+    'Content-Type': 'application/json',
+    'X-CLIENT-TOKEN': getenv("VULAVULA_KEY")
     }
 
 
     resp = post(
-        "https://vulavula-services.lelapa.ai/api/v1/transport/file-upload",
+        VULAVULA_TRANSCRIBE_URL,
         json=transport_request_body,
-        headers=headers,
+        headers=headers1,
     )
 
-    upload_id = resp.json()["upload_id"]
-    # voice_note_result = 
-    print(getenv('WEBHOOK_URL'))
+    try:
+        return resp.json()['text']
+    except:
+        return {'Lelapi':"offline"}
 
-    for i in range(10):
-        sleep(3)
-        process = post(
-            f"https://vulavula-services.lelapa.ai/api/v1/transcribe/process/{upload_id}",
-            json={
-                "webhook": 	getenv('WEBHOOK_URL'),
-            },
-            headers=headers,
-        )
-        print(process.json(),upload_id)
-    x = 0
-
-    # while process.json()["status"] == 'Message sent to process queue.':
-    #     process = post(
-    #     f"https://vulavula-services.lelapa.ai/api/v1/transcribe/process/{upload_id}",
-    #     json={
-    #         "webhook": getenv('WEBHOOK_URL')
-    #     },
-    #     headers=headers,
-    # )   
-    #     print(process.json())
-    #     sleep(3)
-    #     print(x)
-    #     if x == 100:
-    #         return "failed"
     
-    return resp.json()
+    
 
 def speech_text(content="audios.wav"):
+    """Transcribes audio using Lelapi first if fails uses ai
+
+    Args:
+        content (str, optional): _description_. Defaults to "audios.wav".
+
+    Returns:
+        String: Returns transcribed audio either from lepai or ai
+    """
     if content != "audios.wav":
         return
     FILE_SIZE = os.path.getsize(content)
-    speech_to_text_AI(content)
-    # speech_to_text(content,FILE_SIZE)
-
-
+    possible_trascption = speech_to_text(content,FILE_SIZE)
+    if possible_trascption == {'Lelapi':"offline"}: 
+        return speech_to_text_AI(content)
+    else:
+        return possible_trascption
+        
+# print(speech_text("audios.wav")) Test
