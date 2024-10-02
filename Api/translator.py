@@ -1,4 +1,4 @@
-from vuvusetup import object_recognise,translator,LANGUAGES,speech_to_text
+from vuvusetup import object_recognise,translator,LANGUAGES,speech_to_text,speech_to_text_AI
 
 import os
 
@@ -29,11 +29,24 @@ def language_detector(sentence):
             return True
 
 
+
 def speech_text(content="audios.wav"):
+    """Transcribes audio using Lelapi first if fails uses ai
+
+    Args:
+        content (str, optional): _description_. Defaults to "audios.wav".
+
+    Returns:
+        String: Returns transcribed audio either from lepai or ai
+    """
     if content != "audios.wav":
         return
     FILE_SIZE = os.path.getsize(content)
-    speech_to_text(content,FILE_SIZE)
+    possible_trascption = speech_to_text(content,FILE_SIZE)
+    if possible_trascption == {'Lelapi':"offline"}: 
+        return speech_to_text_AI(content)
+    else:
+        return possible_trascption
 
     
 
@@ -57,4 +70,3 @@ def get_data(sentence,prod=False):
     if 0 == data["year"]:
         return "year"
     return
-

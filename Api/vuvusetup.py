@@ -1,14 +1,15 @@
-from retry import retry
+# from retry import retry
 from requests import Session,post
 import base64
 from os import getenv
 from dotenv import load_dotenv
+import os
+import assemblyai as aai
 from time import sleep
 load_dotenv()
 
 
-
-VULAVULA_TOKEN = ""
+VULAVULA_TRANSCRIBE_URL = "https://vulavula-services.lelapa.ai//api/v1/transcribe/sync"
 VULAVULA_BASE_URL = 'https://vulavula-services.lelapa.ai/api/v1/'
 LANGUAGES = {
         "sotho": "nso_Latn",
@@ -23,7 +24,8 @@ LANGUAGES = {
         "swahili": "swh_Latn"
     }
 
-headers={"X-CLIENT-TOKEN": VULAVULA_TOKEN}
+headers={"X-CLIENT-TOKEN": getenv("VULAVULA_KEY")}
+aai.settings.api_key = getenv("ASSAMBLYAI")
 # The transport API to upload your file
 TRANSPORT_URL = VULAVULA_BASE_URL+"transport/file-upload"
  
@@ -46,13 +48,10 @@ def translator(sentence,lang,target):
     data = {
             "input_text": sentence,
             "source_lang": LANGUAGES.get(lang),
-            "target_lang": target
+            "target_lang": LANGUAGES.get(target)
     }
     # Sending POST request
-    print(data)
     response =  post(TRANSLATE_URL, headers=headers, json=data)
-    print(response.text)
-    print(response.json())
     # return sentence if failed to translate
     if response.status_code != 200:
         return sentence
@@ -60,26 +59,54 @@ def translator(sentence,lang,target):
 
 
 
-def object_recognise(sentence):
-    session = retry(Session(), tries=10, backoff=1)
+# def object_recognise(sentence):
+#     session = retry(Session(), tries=10, backoff=1)
 
-    ner = post(
-    NER_URL,
-    json={"encoded_text": sentence},
-    headers=headers,)
-    data = ner.json()
-    new_data = []
-    for data_ in data:
-        new__data = {
-            "entity": data_["entity"],
-            "word": data_["word"]
-        }
-        new_data.append(new__data)
-    return new_data
+#     ner = post(
+#     NER_URL,
+#     json={"encoded_text": sentence},
+#     headers=headers,)
+#     data = ner.json()
+#     new_data = []
+#     for data_ in data:
+#         new__data = {
+#             "entity": data_["entity"],
+#             "word": data_["word"]
+#         }
+#         new_data.append(new__data)
+#     return new_data
 
+"""Works now"""
+def speech_to_text_AI(audiopath):
+    # Initialize the Transcriber object
+    transcriber = aai.Transcriber()
+
+    # Transcribe the audio from the provided path
+    transcript = transcriber.transcribe(audiopath)
+
+    # Check the status of the transcript
+    if transcript.status == aai.TranscriptStatus.error:
+        # If there's an error, print the error message
+        print(f"Transcription failed: {transcript.error}")
+        return None  # Return None to indicate failure
+    elif transcript.status == aai.TranscriptStatus.completed:
+        # If transcription is successful, print and return the transcript text
+        print(transcript.text)
+        return transcript.text
+    else:
+        # Handle other statuses like 'processing' or 'queued'
+        print(f"Transcript is currently {transcript.status}.")
+        return None  # Return None as the process is not complete
 
 
 def speech_to_text(content,file_size):
+    """Lelapi_transcrption
+
+    Args:
+        content (_type_): _description_
+        file_size (_type_): _description_
+    """
+
     # Open file in binary mode
     with open(content, 'rb') as file:
         # Read file
@@ -90,51 +117,32 @@ def speech_to_text(content,file_size):
 
     # Decode bytes to string
     encoded_string = encoded_content.decode()
-
+    
+    # The req can also take the preffered language
     transport_request_body = {
         "file_name": content,
         "audio_blob": encoded_string,
-        "file_size": file_size,
+        # 'language_code': 'eng',
+        "file_size": 0,
+    }
+
+    headers1 = {
+    'Content-Type': 'application/json',
+    'X-CLIENT-TOKEN': getenv("VULAVULA_KEY")
     }
 
 
     resp = post(
-        "https://vulavula-services.lelapa.ai/api/v1/transport/file-upload",
+        VULAVULA_TRANSCRIBE_URL,
         json=transport_request_body,
-        headers=headers,
+        headers=headers1,
     )
 
-    upload_id = resp.json()["upload_id"]
+    try:
+        return resp.json()['text']
+    except:
+        return {'Lelapi':"offline"}
 
 
-
-    process = post(
-        f"https://vulavula-services.lelapa.ai/api/v1/transcribe/process/{upload_id}",
-        json={
-            "webhook": "https://tolerant-terribly-flea.ngrok-free.app/chatbot",
-            "language_code":"eng"
-        },
-        headers=headers,
-    )
-    x = 0
-    while process.json()["status"] == 'Message sent to process queue.':
-        process = post(
-        f"https://vulavula-services.lelapa.ai/api/v1/transcribe/process/{upload_id}",
-        json={
-            "webhook": "https://tolerant-terribly-flea.ngrok-free.app/chatbot",
-            "language_code":"zul"
-        },
-        headers=headers,
-    )   
-        sleep(3)
-        print(x)
-        if x == 100:
-            return "failed"
-    
-    return resp.json()
-
-
-
-
-
-
+        
+# print(speech_text("audios.wav")) Test
