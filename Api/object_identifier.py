@@ -1,7 +1,7 @@
 import os
 
 
-os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "/home/wethinkcode/Documents/my_personal/Qoutelynx-V2/qoutelynx-c2af6bcd894c.json"
+os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "qoutelynx-c2af6bcd894c.json"
 
 def detect_labels(path):
     """Detects labels in the file."""

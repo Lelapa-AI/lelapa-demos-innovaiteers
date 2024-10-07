@@ -1,1 +1,4 @@
 Api/__pycache__/
+.env
+venv
+testing.py

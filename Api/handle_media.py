@@ -1,4 +1,4 @@
-import os
+from os import getenv
 import requests
 from translator import speech_text
 from requests.auth import HTTPBasicAuth
@@ -9,15 +9,11 @@ import car_detector
 
 import google.generativeai as genai
 from object_identifier import recognize_image 
-# import google
 
 from dotenv import load_dotenv
 load_dotenv()
 
 
-
-os.environ['TWILIO_SID'] = ''
-os.environ['TWILIO_TOKEN'] = ''
 
 translator = Translator()
 
@@ -56,7 +52,7 @@ def determine_media(request):
     if num_media > 0:
         media_type = request.values.get('MediaContentType0', '')
         media_url = request.values.get('MediaUrl0', '')
-        response = requests.get(media_url, auth=HTTPBasicAuth('', ''))
+        response = requests.get(media_url, auth=HTTPBasicAuth(getenv("TWILIO_SID"), getenv("TWILIO_TOKEN")))
         print(response.content)
     
 
@@ -103,7 +99,7 @@ def determine_media(request):
 
     
 def get_item_from_image(image_file):
-    genai.configure(api_key='')
+    genai.configure(api_key=getenv("GEMINI_API_KEY"))
 
     def upload_to_gemini(path):
         file = genai.upload_file(path)
