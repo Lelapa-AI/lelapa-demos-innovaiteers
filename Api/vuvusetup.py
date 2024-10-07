@@ -4,11 +4,12 @@ import base64
 from os import getenv
 from dotenv import load_dotenv
 from time import sleep
+
 load_dotenv()
 
 
 
-VULAVULA_TOKEN = ""
+VULAVULA_TOKEN = getenv("VULAVULA_TOKEN")
 VULAVULA_BASE_URL = 'https://vulavula-services.lelapa.ai/api/v1/'
 LANGUAGES = {
         "sotho": "nso_Latn",

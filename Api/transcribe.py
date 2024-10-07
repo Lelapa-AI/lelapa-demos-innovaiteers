@@ -1,6 +1,5 @@
 from google.cloud import speech_v1p1beta1 as speech
 from google.oauth2 import service_account
-import io
 
 client_file = "qoutelynx-afeb607d0f34.json"
 credentials = service_account.Credentials.from_service_account_file(client_file)
