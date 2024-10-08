@@ -1,6 +1,6 @@
 from os import getenv
 import requests
-from translator import speech_text
+from .translator import speech_text
 from requests.auth import HTTPBasicAuth
 from googletrans import Translator
 from transcribe import speech_recognition

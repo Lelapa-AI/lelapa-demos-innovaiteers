@@ -1,4 +1,4 @@
-from vuvusetup import object_recognise,translator,LANGUAGES,speech_to_text
+from .vuvusetup import object_recognise,translator,LANGUAGES,speech_to_text
 
 import os
 
