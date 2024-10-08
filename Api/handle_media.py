@@ -3,7 +3,7 @@ import requests
 from .translator import speech_text
 from requests.auth import HTTPBasicAuth
 from googletrans import Translator
-from transcribe import speech_recognition
+from .transcribe import speech_recognition
 
 import car_detector
 
