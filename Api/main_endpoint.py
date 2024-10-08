@@ -1,8 +1,8 @@
 from flask import Flask, request, session
 from twilio.twiml.messaging_response import MessagingResponse
-from Api.handle_media import determine_media, detect_language, translate_to_english
-from Api.service import connect_with_agent
-from Api.vuvusetup import translator
+from handle_media import determine_media, detect_language, translate_to_english
+from service import connect_with_agent
+from vuvusetup import translator
 import google.generativeai as genai
 from dotenv import load_dotenv
 from os import getenv

@@ -1,14 +1,14 @@
 from os import getenv
 import requests
-from Api.translator import speech_text
+from translator import speech_text
 from requests.auth import HTTPBasicAuth
 from googletrans import Translator
-from Api.transcribe import speech_recognition
+from transcribe import speech_recognition
 
-import Api.car_detector as car_detector
+import car_detector as car_detector
 
 import google.generativeai as genai
-from Api.object_identifier import recognize_image 
+from object_identifier import recognize_image 
 
 from dotenv import load_dotenv
 load_dotenv()
