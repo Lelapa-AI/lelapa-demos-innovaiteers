@@ -5,10 +5,10 @@ from requests.auth import HTTPBasicAuth
 from googletrans import Translator
 from .transcribe import speech_recognition
 
-import car_detector
+from .car_detector import detect_car_details
 
 import google.generativeai as genai
-from object_identifier import recognize_image 
+from .object_identifier import recognize_image 
 
 from dotenv import load_dotenv
 load_dotenv()
@@ -64,7 +64,7 @@ def determine_media(request):
 
                 case "Vehicle detected":
 
-                    response = car_detector.detect_car_details(response.content)
+                    response = detect_car_details(response.content)
                     car_data = format_response(response)
                     return "image", car_data, request.values.get("WaId","")
                 
