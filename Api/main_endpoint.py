@@ -87,6 +87,12 @@ chats = {}
 logging.basicConfig(level=logging.INFO)
 
 
+# Testing endpoint
+@app.route("/", methods=["GET"])
+def test_endpoint():
+    return "API is deployed correctly and functional!"
+
+
 # Webhook for the bot
 @app.route("/Bot", methods=["POST"])
 def webhook():
