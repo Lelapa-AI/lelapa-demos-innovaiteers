@@ -1,0 +1,1 @@
+web: gunicorn Api.main_endpoint:app
